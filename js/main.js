@@ -10,6 +10,14 @@ const inputRows = document.querySelector("#rows");
 const inputColumns = document.querySelector("#columns");
 
 const gridInputs = document.querySelectorAll(".grid");
+const colorButtons = document.querySelectorAll(".color-btn");
+
+const inputSelectColor = document.querySelector("#select-color");
+const btnCustomColor = document.querySelector("#custom-color");
+const btnBlackColor = document.querySelector("#black-color");
+const btnRandomColor = document.querySelector("#random-color");
+const btnRainbowColor = document.querySelector("#rainbow-color");
+const btnEraser = document.querySelector("#eraser");
 
 let sketchpadRows = 16;
 let sketchpadColumns = 16;
@@ -24,6 +32,7 @@ const sketchpadBorderPxStr = findPxValue(sketchpadBorder);
 const sketchpadBorderPxNum = getPxNum(sketchpadBorderPxStr);
 
 let lineColor = getRGB(0, 0, 0);
+let rainbowColor = false;
 
 let squareDivWidth =
   (getPxNum(sketchpadWidth) - sketchpadBorderPxNum * 2) / sketchpadColumns;
@@ -54,8 +63,26 @@ const squareDivs = document.querySelectorAll(".square-div");
 
 squareDivs.forEach((square) => {
   square.addEventListener("mouseover", () => {
-    square.style.background = lineColor;
+    fillColorWithMousover(square);
   });
+});
+colorButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    button === btnRainbowColor ? (rainbowColor = true) : (rainbowColor = false);
+  });
+});
+btnCustomColor.addEventListener("click", () => {
+  lineColor = inputSelectColor.value;
+});
+btnBlackColor.addEventListener("click", () => {
+  lineColor = getRGB(0, 0, 0);
+});
+btnRandomColor.addEventListener("click", () => {
+  lineColor = getRandomRBG();
+});
+
+btnEraser.addEventListener("click", () => {
+  lineColor = "none";
 });
 
 btnClear.addEventListener("click", clearAllSquareDivs);
@@ -104,6 +131,13 @@ function clearAllSquareDivs() {
   changeBackground(".square-div", "none");
 }
 
+function fillColorWithMousover(square) {
+  if (rainbowColor) {
+    lineColor = getRandomRBG();
+  }
+  square.style.background = lineColor;
+}
+
 function changeBackground(cls, bgColor) {
   const items = document.querySelectorAll(cls);
   for (let i = 0; i < items.length; i++) {
@@ -123,7 +157,7 @@ function updateRowsAndColumns(rows, columns) {
   const squareDivs = document.querySelectorAll(".square-div");
   squareDivs.forEach((square) => {
     square.addEventListener("mouseover", () => {
-      square.style.background = lineColor;
+      fillColorWithMousover(square);
     });
   });
 }
@@ -160,4 +194,15 @@ function getSquareDivsLength(rowsOrColumns) {
     (getPxNum(sketchpadWidth) - sketchpadBorderPxNum * 2) / rowsOrColumns,
     "px"
   );
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+function getRandomRBG() {
+  const arg1 = getRandomInt(256);
+  const arg2 = getRandomInt(256);
+  const arg3 = getRandomInt(256);
+  return getRGB(arg1, arg2, arg3);
 }
