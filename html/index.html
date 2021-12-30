@@ -9,6 +9,29 @@
     <link rel="stylesheet" href="../css/main.css" />
   </head>
   <body>
+    <button id="clear-btn" type="button">Clear</button>
+
+    <form action="">
+      <label for="rows">Rows:</label>
+      <input
+        id="rows"
+        class="grid"
+        type="number"
+        value="16"
+        min="4"
+        max="100"
+      />
+      <label for="columns">Columns:</label>
+      <input
+        id="columns"
+        class="grid"
+        type="number"
+        value="16"
+        min="4"
+        max="100"
+      />
+      <button id="pixels-btn" type="button">Resize pixels</button>
+    </form>
     <div id="sketchpad"></div>
     <script src="../js/main.js"></script>
   </body>
