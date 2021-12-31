@@ -17,6 +17,7 @@ const btnCustomColor = document.querySelector("#custom-color");
 const btnBlackColor = document.querySelector("#black-color");
 const btnRandomColor = document.querySelector("#random-color");
 const btnRainbowColor = document.querySelector("#rainbow-color");
+const btnGrayscaleColor = document.querySelector("#grayscale-color");
 const btnEraser = document.querySelector("#eraser");
 
 let sketchpadRows = 16;
@@ -31,8 +32,22 @@ const sketchpadBorder = sketchpadStyles.border;
 const sketchpadBorderPxStr = findPxValue(sketchpadBorder);
 const sketchpadBorderPxNum = getPxNum(sketchpadBorderPxStr);
 
+const grayscaleColors = [
+  "#ebebeb",
+  "#d6d8dc",
+  "#bdbdbd",
+  "#ababab",
+  "#8c8c8c",
+  "#707070",
+  "#575757",
+  "#424242",
+  "#2e2e2e",
+  "#121212",
+];
+
 let lineColor = getRGB(0, 0, 0);
 let rainbowColor = false;
+let grayscaleColor = false;
 
 let squareDivWidth =
   (getPxNum(sketchpadWidth) - sketchpadBorderPxNum * 2) / sketchpadColumns;
@@ -68,7 +83,8 @@ squareDivs.forEach((square) => {
 });
 colorButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    button === btnRainbowColor ? (rainbowColor = true) : (rainbowColor = false);
+    rainbowColor = button === btnRainbowColor ? true : false;
+    grayscaleColor = button === btnGrayscaleColor ? true : false;
   });
 });
 btnCustomColor.addEventListener("click", () => {
@@ -134,6 +150,16 @@ function clearAllSquareDivs() {
 function fillColorWithMousover(square) {
   if (rainbowColor) {
     lineColor = getRandomRBG();
+  }
+  if (!grayscaleColor) {
+    square.grayscaleLevel = undefined;
+  } else {
+    if (square.grayscaleLevel === undefined) {
+      square.grayscaleLevel = 0;
+    } else if (square.grayscaleLevel < grayscaleColors.length) {
+      square.grayscaleLevel += 1;
+    }
+    lineColor = grayscaleColors[square.grayscaleLevel];
   }
   square.style.background = lineColor;
 }
