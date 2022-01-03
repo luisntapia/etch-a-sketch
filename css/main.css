@@ -3,6 +3,11 @@
 *::before,
 html {
   box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  background: rgb(143, 142, 142);
 }
 
 h1 {
@@ -22,6 +27,8 @@ main {
 section.config {
   display: flex;
   flex-direction: column;
+  background: rgb(184, 176, 176);
+  border-radius: 12px;
 }
 
 section.config form {
@@ -47,12 +54,26 @@ section.config form#color-config button {
   margin: 3px;
 }
 
+.border {
+  background: url(../img/red-background-painting.jpg);
+  width: 530px;
+  height: 530px;
+  border-radius: 12px;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -250px;
+  margin-top: -250px;
+}
+
 #sketchpad {
   display: flex;
   flex-wrap: wrap;
   height: 500px;
   width: 500px;
   border: 1px solid rgb(0, 0, 0);
+  background: #fff;
 
   position: absolute;
   left: 50%;
